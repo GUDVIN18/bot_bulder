@@ -1,7 +1,12 @@
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from apps.bot.models import Bot_Message, Bot_Button, BotUser
+from apps.worker.models import Events
 import requests
 from datetime import datetime
+import pandas as pd
+import time
+from threading import Thread
+
 
 class Bot_Handler():
     def __init__(self) -> None:
@@ -25,7 +30,7 @@ class Bot_Handler():
 
 
 
-    def base(self, bot, state, user, callback_data, callback_id, message):
+    def base(self, bot, state, user, callback_data, callback_id, message, event):
         self.val = {}  # Очищаем переменные для каждого нового вызова
         print(f'''
             user - {user}
@@ -54,7 +59,7 @@ class Bot_Handler():
 
 
 
-    def start(self, bot, state, user, callback_data, callback_id, message):
+    def start(self, bot, state, user, callback_data, callback_id, message, event):
         self.val = {}  # Очищаем переменные
         print(f'''------------- START 
             user - {user}
@@ -85,92 +90,13 @@ class Bot_Handler():
         bot.send_message(user.tg_id, text, reply_markup=keyboard)
 
 
-
-
-    def weather(self, bot, state, user, callback_data, callback_id, message):
-        self.val = {}  # Очищаем переменные
-        user.state = state.current_state
-        user.save()
-
-        print(f'''------------- weather 
-            user - {user}
-            call_data - {callback_data}
-            call_id - {callback_id}
-            message - {message}''')
-
-
-        try:
-            weather_message = Bot_Message.objects.get(current_state='weather')
-            text = self.format_message_text(weather_message.text)
-        except Bot_Message.DoesNotExist:
-            text = "Ошибка при получении состояния def weather()"
-
-        buttons = Bot_Button.objects.filter(message_trigger=weather_message)
-        keyboard = InlineKeyboardMarkup()
-        for button in buttons:
-            keyboard.add(InlineKeyboardButton(text=button.text, callback_data=button.data))
-
-        bot.send_message(user.tg_id, text, reply_markup=keyboard)
-
-    def Moskow(self, bot, state, user, callback_data, callback_id, message):
-        self.val = {}  # Очищаем переменные
-        user.state = state.current_state
-        user.save()
-        city_id_dict = {'moskow': 524901}
-
-        api_key = 'c42fb5f8d37ff5c951a9628a751e27c8'
-        city_id = city_id_dict[callback_data.split(' ')[1]]
-
-        url = f'http://api.openweathermap.org/data/2.5/weather?id={city_id}&appid={api_key}&units=metric'
-        
-        try:
-            response = requests.get(url)
-            data = response.json()
-            
-            if response.status_code == 200:
-                # Сохраняем все доступные данные в переменные
-                self.val['temperature'] = round(data['main']['temp'], 1)
-                self.val['description'] = data['weather'][0]['description']
-                self.val['humidity'] = data['main']['humidity']
-                self.val['pressure'] = data['main']['pressure']
-                self.val['wind_speed'] = data['wind']['speed']
-                self.val['city_name'] = 'Москва'
-                self.val['current_time'] = datetime.now().strftime('%H:%M')
-                self.val['date'] = datetime.now().strftime('%Y-%m-%d')
-                self.val['feels_like'] = round(data['main']['feels_like'], 1)
-            else:
-                self.val['error'] = f"Ошибка при получении данных: {data['message']}"
-        
-        except requests.RequestException as e:
-            self.val['error'] = f"Ошибка при выполнении запроса: {e}"
-
-        try:
-            moscow_message = Bot_Message.objects.get(current_state='Moskow')
-            text = self.format_message_text(moscow_message.text)
-        except Bot_Message.DoesNotExist:
-            text = "Ошибка при получении состояния def Moskow()"
-
-        buttons = Bot_Button.objects.filter(message_trigger=moscow_message)
-        keyboard = InlineKeyboardMarkup()
-        for button in buttons:
-            keyboard.add(InlineKeyboardButton(text=button.text, callback_data=button.data))
-
-        bot.send_message(user.tg_id, text, reply_markup=keyboard)
-
-
-
-
-
-
-    def select_an_item(self, bot, state, user, callback_data, callback_id, message):
+    def continue_message(self, bot, state, user, callback_data, callback_id, message, event):
         self.val = {}  # Очищаем переменные для каждого нового вызова
         print(f'''
             user - {user}
             call_data - {callback_data}
             call_id - {callback_id}
             message - {message}''')
-        
-        print(f'\n\n\n user.state до {user.state}\nпосле {state.current_state} ')
 
         user.state = state.current_state
         user.save()
@@ -193,18 +119,54 @@ class Bot_Handler():
 
 
 
-
-
-    #Обработка текста пользователя
-    def text_processing(self, bot, state, user, callback_data, callback_id, message):
-        self.val = {}  # Очищаем переменные для каждого нового вызова
+    def entering_preferences(self, bot, state, user, callback_data, callback_id, message, event):
+        self.val = {}
         print(f'''
             user - {user}
             call_data - {callback_data}
             call_id - {callback_id}
             message - {message}''')
         
-        print(f'\n\n\n user.state до {user.state}\nпосле {state.current_state} ')
+        message_text = message['text']
+
+        user.state = state.current_state
+        user.save()
+
+        data = {
+            'question': f"Пользователь {user.tg_id}: {message_text}",
+            'task_end_handler': 'task_end_alert',
+            # 'event_id': str(event.id)  # Добавляем ID события
+        }
+
+        response = requests.post('http://62.68.146.176:8092/create_task', data=data)
+
+        bot.send_chat_action(chat_id=user.tg_id, action='typing', timeout=4)
+
+        # Сохраняем task_id в событии
+        event.task_id = response.json().get('task_id')  # Предполагая, что API возвращает task_id
+        event.save()
+
+        # Форматируем текст с использованием переменных
+        text = self.format_message_text(state.text)
+
+        buttons = Bot_Button.objects.filter(message_trigger=state)
+        keyboard = InlineKeyboardMarkup()
+        for button in buttons:
+            keyboard.add(InlineKeyboardButton(text=button.text, callback_data=button.data))
+        
+
+        bot.send_message(user.tg_id, text, reply_markup=keyboard)
+
+
+
+
+    def success_LLM(self, bot, state, user, callback_data, callback_id, message, event):
+        self.val = {}  # Очищаем переменные для каждого нового вызова
+        print(f'''
+            user - {user}
+            call_data - {callback_data}
+            call_id - {callback_id}
+            message - {message}''')
 
         user.state = state.current_state
         user.save()
@@ -212,7 +174,7 @@ class Bot_Handler():
         # Добавляем базовые переменные
         self.val['user_name'] = user.name if hasattr(user, 'name') else 'Пользователь'
         self.val['user_id'] = user.tg_id
-        self.val['text'] = 'Базовое сообщение'  # Значение по умолчанию
+        self.val['text'] = message['text']
 
         # Форматируем текст с использованием переменных
         text = self.format_message_text(state.text)
@@ -223,35 +185,5 @@ class Bot_Handler():
             keyboard.add(InlineKeyboardButton(text=button.text, callback_data=button.data))
 
         bot.send_message(user.tg_id, text, reply_markup=keyboard)
+    
 
-
-
-    #Обработка текста пользователя comlete
-    def text_processing_complete(self, bot, state, user, callback_data, callback_id, message):
-        self.val = {}  # Очищаем переменные для каждого нового вызова
-        print(f'''
-            user - {user}
-            call_data - {callback_data}
-            call_id - {callback_id}
-            message - {message}''')
-        
-        
-        print(f'\n\n\n user.state до {user.state}\nпосле {state.current_state} ')
-
-        user.state = state.current_state
-        user.save()
-
-        # Добавляем базовые переменные
-        self.val['user_name'] = user.name if hasattr(user, 'name') else 'Пользователь'
-        self.val['user_id'] = user.tg_id
-        self.val['text'] = message['text']  # Значение по умолчанию
-
-        # Форматируем текст с использованием переменных
-        text = self.format_message_text(state.text)
-
-        buttons = Bot_Button.objects.filter(message_trigger=state)
-        keyboard = InlineKeyboardMarkup()
-        for button in buttons:
-            keyboard.add(InlineKeyboardButton(text=button.text, callback_data=button.data))
-
-        bot.send_message(user.tg_id, text, reply_markup=keyboard)

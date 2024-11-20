@@ -14,8 +14,8 @@ class Command(BaseCommand):
     def worker(bot):
         if Events.objects.filter(status='ACCEPTED').exists():
             states = Events.objects.filter(status='ACCEPTED')
-            for state in states:
-                update = state.update_data
+            for event in states:
+                update = event.update_data
                 serialized_data = {
                     'user_id': '' ,
                     'callback_id': '' ,
@@ -56,11 +56,12 @@ class Command(BaseCommand):
                     }
                 )
 
-
-                print('user', type(user), user)
-
-                state.status = 'COMPLETED'
-                state.save()
+                if user:
+                    event.user = user
+                elif create:
+                    event.user = create
+                event.status = 'COMPLETED'
+                event.save()
 
                 #Кнопка
                 if serialized_data['callback_data']:
@@ -73,7 +74,7 @@ class Command(BaseCommand):
                             handler_name = 'base'
 
                         handler = getattr(Bot_Handler(), handler_name)
-                        handler(bot, state=state, user=user, callback_data=serialized_data['callback_data'], callback_id=serialized_data['callback_id'], message=serialized_data['message'])
+                        handler(bot, state=state, user=user, callback_data=serialized_data['callback_data'], callback_id=serialized_data['callback_id'], message=serialized_data['message'], event=event)
                     except Exception as e:
                         print('Нет привязанного сообщения!')
 
@@ -92,7 +93,7 @@ class Command(BaseCommand):
                                 handler_name = 'base'
 
                             handler = getattr(Bot_Handler(), handler_name)
-                            handler(bot, state=state, user=user, callback_data=serialized_data['callback_data'], callback_id=serialized_data['callback_id'], message=serialized_data['message'])
+                            handler(bot, state=state, user=user, callback_data=serialized_data['callback_data'], callback_id=serialized_data['callback_id'], message=serialized_data['message'], event=event)
                         except Exception as e:
                             print('Произошла ошибка при обработке текста', e)
 
@@ -107,11 +108,25 @@ class Command(BaseCommand):
                                 handler_name = 'base'
 
                             handler = getattr(Bot_Handler(), handler_name)
-                            handler(bot, state=state, user=user, callback_data=serialized_data['callback_data'], callback_id=serialized_data['callback_id'], message=serialized_data['message'])
+                            handler(bot, state=state, user=user, callback_data=serialized_data['callback_data'], callback_id=serialized_data['callback_id'], message=serialized_data['message'], event=event)
+
+
+                        else:
+                            if state.anyway_link:
+                                print(state.anyway_link)
+                                state = Bot_Message.objects.get(current_state=state.anyway_link)
+                                if state.handler:
+                                    handler_name = state.handler
+                                else:
+                                    handler_name = 'base'
+
+                                handler = getattr(Bot_Handler(), handler_name)
+                                handler(bot, state=state, user=user, callback_data=serialized_data['callback_data'], callback_id=serialized_data['callback_id'], message=serialized_data['message'], event=event)
+
     bot = TeleBot(bot_token)
     while True:
         worker(bot)
-        time.sleep(0.2)
+        time.sleep(0.05)
 
 
 

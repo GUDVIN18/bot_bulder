@@ -77,6 +77,7 @@ class Bot_MessageAdmin(admin.ModelAdmin):
         "text",
         "current_state",
         "next_state",
+        "anyway_link",
         "handler",
     ]
     list_display = (

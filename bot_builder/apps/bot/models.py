@@ -43,10 +43,11 @@ class Bot_Message(models.Model):
     text = models.TextField(verbose_name="Текст сообщения")
     current_state =  models.CharField(max_length=110, verbose_name="К какому состоянию привязана?", default=None, unique=True)
     next_state = models.CharField(max_length=255, verbose_name="Ссылка на состояние при вводе", default=None, null=True, blank=True)
+    anyway_link = models.CharField(max_length=110, help_text="На какое состояние пебрасывает пользователя", null=True, blank=True, unique=True)
     handler = models.CharField(max_length=255, verbose_name="Имя функции обработчика", null=True, blank=True, default=None)
 
     def __str__(self):
-        return f"{self.text[:50]}... (Состояние: {self.current_state})"
+        return f"{self.text[:50]}... (Состояние: {self.current_state if self.current_state is not None else self.anyway_link})"
 
     class Meta:
         verbose_name = "Сообщение"

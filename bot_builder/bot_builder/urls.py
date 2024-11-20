@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
+from apps.worker.views import task_complete_alert
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('task_complete_alert', task_complete_alert, name='task_complete_alert'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
