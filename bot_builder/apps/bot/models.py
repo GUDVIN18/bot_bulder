@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User, Group
 
 
 class TelegramBotConfig(models.Model):
@@ -25,6 +26,32 @@ class BotUser(models.Model):
     premium = models.BooleanField(verbose_name="Имеет ли пользователь премиум-аккаунт", default=False, blank=True, null=True)
     # state = models.CharField(max_length=110, choices=STATE_CHOICES, default='')
     state = models.CharField(max_length=255, help_text='Состояние')
+
+    last_message_id = models.BigIntegerField(null=True, blank=True, help_text="ID последнего отправленного сообщения с кнопками")
+
+    prompt = models.TextField(help_text='Промт', null=True, blank=True, default=' ')
+    photo = models.FileField(upload_to='photos/', default=' ', null=True, blank=True)
+
+    summa = models.CharField(max_length=255, help_text='Сумма инвестиций', null=True, blank=True)
+    period = models.CharField(max_length=255, help_text='Период', null=True, blank=True)
+    interes = models.CharField(max_length=255, help_text='Интерес', null=True, blank=True)
+    type_investor = models.CharField(max_length=255, help_text='Тип инвестора', null=True, blank=True)
+    gender = models.CharField(max_length=255, help_text='Гендер', null=True, blank=True)
+
+    count_generation = models.IntegerField(null=True, blank=True, default=0)
+    summa_first = models.CharField(max_length=255, help_text='Сумма инвестиций первый раз', null=True, blank=True)
+    period_first = models.CharField(max_length=255, help_text='Период первый раз', null=True, blank=True)
+    interes_first = models.CharField(max_length=255, help_text='Интерес первый раз', null=True, blank=True)
+    type_investor_first = models.CharField(max_length=255, help_text='Тип инвестора первый раз', null=True, blank=True)
+    gender_first = models.CharField(max_length=255, help_text='Гендер первый раз', null=True, blank=True)
+
+
+    format_photo = models.CharField(max_length=255, help_text='Формат', null=True, blank=True)
+
+    #Для генератора
+    prompt_leonardo = models.TextField(verbose_name="Промт для leonardo", null=True, blank=True)
+    negative_prompt = models.TextField(verbose_name="Негативный Промт", null=True, blank=True)
+
 
 
     def __str__(self):
@@ -79,3 +106,20 @@ class Bot_Button(models.Model):
     class Meta:
         verbose_name = "Кнопку"
         verbose_name_plural = "Кнопки"
+
+
+
+
+class UserValidIP(models.Model):
+    linked_user = models.ForeignKey(to=User, on_delete=models.SET_NULL, null=True, blank=True, related_name='admin_ip', verbose_name="Пользователь")
+    ip = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP для входа")
+
+    def __str__(self):
+        return f"{self.linked_user} (ip: {self.ip})"
+
+    class Meta:
+        verbose_name = "Доступ по IP"
+        verbose_name_plural = "IP доступ"
+
+
+

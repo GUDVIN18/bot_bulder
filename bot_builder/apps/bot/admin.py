@@ -40,6 +40,26 @@ class BotUserAdmin(admin.ModelAdmin):
         "language",
         "premium",
         "state",
+        'photo',
+        'prompt',
+        'summa',
+        'period',
+        'interes',
+        'type_investor',
+        'gender',
+        'count_generation',
+        'format_photo',
+        'last_message_id',
+
+        # Для генератора
+        'prompt_leonardo',
+        'negative_prompt',
+
+        'summa_first',
+        'period_first',
+        'interes_first',
+        'type_investor_first',
+        'gender_first',
 
     ]
     list_display = (
@@ -138,3 +158,29 @@ class Bot_ButtonAdmin(admin.ModelAdmin):
         "text",
         "message_trigger",
     )
+
+
+
+
+
+@admin.register(UserValidIP)
+class UserValidIPAdmin(admin.ModelAdmin):
+    fields = [
+        "linked_user",
+        "ip",
+    ]
+    list_display = (
+        "linked_user",
+        "ip",
+    )
+    list_filter = (
+        "linked_user",
+        "ip",
+    )
+    search_fields = (
+        "linked_user",
+        "ip",
+    )
+
+
+

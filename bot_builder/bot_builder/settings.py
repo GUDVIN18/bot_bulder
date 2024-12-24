@@ -21,11 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-@&(yst_r66z_g#(zj5+-i7_yhd272or)3sm^1dmr_+9=lxzekl'
-
+# Установите лимит в байтах (например, 10 МБ)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1000 * 1024 * 1024  # 10 MB
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DEVELOPMENT = True
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Для X-Content-Type-Options: nosniff
 
-ALLOWED_HOSTS = ['62.68.146.176',]
+ALLOWED_HOSTS = ['localhost', '91.218.245.239', 'bcs-invest-balanser.site']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://bcs-invest-balanser.site',
+]
 
 
 # Application definition
@@ -41,15 +48,28 @@ INSTALLED_APPS = [
     'apps.worker'
 ]
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+if DEVELOPMENT:
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+else:
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'apps.bot.middleware.AdminIPRestrictionMiddleware',
+        'apps.bot.middleware.RoleBasedIPRestrictionMiddleware', 
+    ]
 
 ROOT_URLCONF = 'bot_builder.urls'
 
@@ -74,13 +94,16 @@ WSGI_APPLICATION = 'bot_builder.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASES = { 
+    'default': { 
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bot_db', 
+        'USER': 'admin', 
+        'PASSWORD': 'CSEzF_jT2GUmUsL', 
+        'HOST': 'localhost', 
+        'PORT': '', }
     }
-}
+
 
 
 # Password validation

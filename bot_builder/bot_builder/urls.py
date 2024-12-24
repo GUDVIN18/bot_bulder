@@ -18,9 +18,12 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from apps.worker.views import task_complete_alert
+from apps.worker.views import task_complete_alert, task_error_alert, get_user_logs, user_photo_upload
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('task_complete_alert', task_complete_alert, name='task_complete_alert'),
+    path('task_error_alert', task_error_alert, name='task_error_alert'),
+    path('get_user_logs', get_user_logs, name='get_user_logs'),
+    path('user_photo_upload', user_photo_upload, name='user_photo_upload'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
