@@ -38924,3 +38924,7 @@ Bad Request: /api.ip.pn:443
 [24/Dec/2024 15:21:26] "»   proxychecker api.ip.pn " 400 -
 Not Found: /
 [24/Dec/2024 15:23:46] "GET / HTTP/1.0" 404 3079
+[24/Dec/2024 15:27:22] "GET /user_photo_upload?tg_id=6358825996 HTTP/1.0" 200 12354
+[24/Dec/2024 15:27:22] "GET /user_photo_upload?tg_id=6358825996 HTTP/1.0" 200 12354
+[24/Dec/2024 15:27:23] "GET /user_photo_upload?tg_id=1066043357 HTTP/1.0" 200 12354
+[24/Dec/2024 15:27:23] "GET /user_photo_upload?tg_id=1066043357 HTTP/1.0" 200 12354
