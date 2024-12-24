@@ -38928,3 +38928,42 @@ Not Found: /
 [24/Dec/2024 15:27:22] "GET /user_photo_upload?tg_id=6358825996 HTTP/1.0" 200 12354
 [24/Dec/2024 15:27:23] "GET /user_photo_upload?tg_id=1066043357 HTTP/1.0" 200 12354
 [24/Dec/2024 15:27:23] "GET /user_photo_upload?tg_id=1066043357 HTTP/1.0" 200 12354
+[24/Dec/2024 15:28:35] "POST /user_photo_upload HTTP/1.0" 200 12409
+[24/Dec/2024 15:28:36] "POST /user_photo_upload HTTP/1.0" 200 12409
+Internal Server Error: /user_photo_upload
+Traceback (most recent call last):
+  File "/root/project/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/project/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/root/project/bot_bulder/bot_builder/apps/worker/views.py", line 696, in user_photo_upload
+    user = BotUser.objects.get(tg_id=int(tg_id))
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[24/Dec/2024 15:28:36] "GET /user_photo_upload HTTP/1.0" 500 58576
+Internal Server Error: /user_photo_upload
+Traceback (most recent call last):
+  File "/root/project/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/project/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/root/project/bot_bulder/bot_builder/apps/worker/views.py", line 696, in user_photo_upload
+    user = BotUser.objects.get(tg_id=int(tg_id))
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[24/Dec/2024 15:28:36] "GET /user_photo_upload HTTP/1.0" 500 57875
+[24/Dec/2024 15:28:44] "GET /user_photo_upload?tg_id=879420273 HTTP/1.0" 200 12353
+[24/Dec/2024 15:28:45] "GET /user_photo_upload?tg_id=879420273 HTTP/1.0" 200 12353
+[24/Dec/2024 15:28:46] "GET /user_photo_upload?tg_id=879420273 HTTP/1.0" 200 12353
+[24/Dec/2024 15:28:51] "POST /task_complete_alert HTTP/1.1" 200 2828
+[24/Dec/2024 15:28:53] "POST /task_complete_alert HTTP/1.1" 200 2821
+[24/Dec/2024 15:29:33] "POST /user_photo_upload HTTP/1.0" 200 12408
+Internal Server Error: /user_photo_upload
+Traceback (most recent call last):
+  File "/root/project/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/root/project/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/root/project/bot_bulder/bot_builder/apps/worker/views.py", line 696, in user_photo_upload
+    user = BotUser.objects.get(tg_id=int(tg_id))
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[24/Dec/2024 15:29:33] "GET /user_photo_upload HTTP/1.0" 500 57372
+[24/Dec/2024 15:29:49] "POST /task_complete_alert HTTP/1.1" 200 2747

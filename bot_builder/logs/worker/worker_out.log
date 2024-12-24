@@ -6602,3 +6602,84 @@ user_data
 
  {'id': 1066043357, 'is_bot': False, 'username': 'spbkrs', 'first_name': 'Александр', 'is_premium': True, 'language_code': 'ru'}
 ---------------STATE из NEW_WORKER Вы харизматичный мужчина или очаровательная леди?... (Состояние: type_investor)
+
+            user - user_object 1066043357 spbkrs
+            call_data - type_investor Умеренный
+            call_id - 4578621357961945691
+            message - {'chat': {'id': 1066043357, 'type': 'private', 'username': 'spbkrs', 'first_name': 'Александр'}, 'date': 1735043222, 'from': {'id': 8049871685, 'is_bot': True, 'username': 'BCS_NewYear_bot', 'first_name': 'Новогодний бот БКС Мир инвестиций'}, 'text': 'Какой вы инвестор?', 'message_id': 31811, 'reply_markup': {'inline_keyboard': [[{'text': 'Рискованный', 'callback_data': 'type_investor Рискованный'}], [{'text': 'Умеренный', 'callback_data': 'type_investor Умеренный'}], [{'text': 'Консервативный', 'callback_data': 'type_investor Консервативный'}]]}}
+
+
+user_data
+
+ {'id': 6358825996, 'is_bot': False, 'username': 'yankoff_law', 'first_name': 'Андрей', 'language_code': 'ru'}
+---------------STATE из NEW_WORKER Выберите формат изображения... (Состояние: gender_user)
+
+            user - user_object 6358825996 yankoff_law
+            call_data - gender_user Мужчина
+            call_id - 8864205621751576777
+            message - {'chat': {'id': 6358825996, 'type': 'private', 'username': 'yankoff_law', 'first_name': 'Андрей'}, 'date': 1735043225, 'from': {'id': 8049871685, 'is_bot': True, 'username': 'BCS_NewYear_bot', 'first_name': 'Новогодний бот БКС Мир инвестиций'}, 'text': 'Вы харизматичный мужчина или очаровательная леди?', 'message_id': 31812, 'reply_markup': {'inline_keyboard': [[{'text': 'Мужчина', 'callback_data': 'gender_user Мужчина'}, {'text': 'Женщина', 'callback_data': 'gender_user Женщина'}]]}}
+
+
+user_data
+
+ {'id': 1066043357, 'is_bot': False, 'username': 'spbkrs', 'first_name': 'Александр', 'is_premium': True, 'language_code': 'ru'}
+---------------STATE из NEW_WORKER Выберите формат изображения... (Состояние: gender_user)
+
+            user - user_object 1066043357 spbkrs
+            call_data - gender_user Мужчина
+            call_id - 4578621358420056702
+            message - {'chat': {'id': 1066043357, 'type': 'private', 'username': 'spbkrs', 'first_name': 'Александр'}, 'date': 1735043226, 'from': {'id': 8049871685, 'is_bot': True, 'username': 'BCS_NewYear_bot', 'first_name': 'Новогодний бот БКС Мир инвестиций'}, 'text': 'Вы харизматичный мужчина или очаровательная леди?', 'message_id': 31813, 'reply_markup': {'inline_keyboard': [[{'text': 'Мужчина', 'callback_data': 'gender_user Мужчина'}, {'text': 'Женщина', 'callback_data': 'gender_user Женщина'}]]}}
+
+
+user_data
+
+ {'id': 6358825996, 'is_bot': False, 'username': 'yankoff_law', 'first_name': 'Андрей', 'language_code': 'ru'}
+---------------STATE из NEW_WORKER Последний шаг! 
+
+Для отправки фото нажмите ниже ... (Состояние: text_in_front_photo)
+
+            user - user_object 6358825996 yankoff_law
+            call_data - text_in_front_photo Вертикальный
+            call_id - 8864205621631406119
+            message - {'chat': {'id': 6358825996, 'type': 'private', 'username': 'yankoff_law', 'first_name': 'Андрей'}, 'date': 1735043228, 'from': {'id': 8049871685, 'is_bot': True, 'username': 'BCS_NewYear_bot', 'first_name': 'Новогодний бот БКС Мир инвестиций'}, 'text': 'Выберите формат изображения', 'message_id': 31814, 'reply_markup': {'inline_keyboard': [[{'text': 'Вертикальный', 'callback_data': 'text_in_front_photo Вертикальный'}], [{'text': 'Горизонтальный', 'callback_data': 'text_in_front_photo Горизонтальный'}]]}}
+
+
+user_data
+
+ {'id': 1066043357, 'is_bot': False, 'username': 'spbkrs', 'first_name': 'Александр', 'is_premium': True, 'language_code': 'ru'}
+---------------STATE из NEW_WORKER Последний шаг! 
+
+Для отправки фото нажмите ниже ... (Состояние: text_in_front_photo)
+
+            user - user_object 1066043357 spbkrs
+            call_data - text_in_front_photo Вертикальный
+            call_id - 4578621355402025999
+            message - {'chat': {'id': 1066043357, 'type': 'private', 'username': 'spbkrs', 'first_name': 'Александр'}, 'date': 1735043229, 'from': {'id': 8049871685, 'is_bot': True, 'username': 'BCS_NewYear_bot', 'first_name': 'Новогодний бот БКС Мир инвестиций'}, 'text': 'Выберите формат изображения', 'message_id': 31815, 'reply_markup': {'inline_keyboard': [[{'text': 'Вертикальный', 'callback_data': 'text_in_front_photo Вертикальный'}], [{'text': 'Горизонтальный', 'callback_data': 'text_in_front_photo Горизонтальный'}]]}}
+
+
+user_data
+
+ {'id': 879420273, 'is_bot': False, 'last_name': 'Dubin', 'first_name': 'Anton', 'language_code': 'ru'}
+---------------STATE из NEW_WORKER Представим, что вы инвестируете сумму каждый месяц... (Состояние: start_opros)
+
+            user - user_object 879420273 None
+            call_data - start_opros
+            call_id - 3777081314797895750
+            message - {'chat': {'id': 879420273, 'type': 'private', 'last_name': 'Dubin', 'first_name': 'Anton'}, 'date': 1734414500, 'from': {'id': 8049871685, 'is_bot': True, 'username': 'BCS_NewYear_bot', 'first_name': 'Новогодний бот БКС Мир инвестиций'}, 'text': 'Чтобы помечтать ещё раз, нажмите ниже', 'message_id': 29120, 'reply_markup': {'inline_keyboard': [[{'text': 'Помечтать', 'callback_data': 'start_opros'}, {'url': 'https://t.me/share/url?url=&text=%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%21%20%D0%94%D0%B0%D0%B2%D0%B0%D0%B9%20%D0%BF%D0%BE%D0%BC%D0%B5%D1%87%D1%82%D0%B0%D0%B5%D0%BC%20%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B5%20%D1%81%20%40BCS_NewYear_bot', 'text': 'Поделиться ботом'}]]}}
+
+
+user_data
+
+ {'id': 879420273, 'is_bot': False, 'last_name': 'Dubin', 'first_name': 'Anton', 'language_code': 'ru'}
+---------------STATE из NEW_WORKER В течение какого периода планируете инвестировать... (Состояние: summa_invest_user)
+
+            user - user_object 879420273 None
+            call_data - summa_invest_user 100 тыс
+            call_id - 3777081313549770159
+            message - {'chat': {'id': 879420273, 'type': 'private', 'last_name': 'Dubin', 'first_name': 'Anton'}, 'date': 1735043303, 'from': {'id': 8049871685, 'is_bot': True, 'username': 'BCS_NewYear_bot', 'first_name': 'Новогодний бот БКС Мир инвестиций'}, 'text': 'Представим, что вы инвестируете сумму каждый месяц', 'message_id': 31818, 'reply_markup': {'inline_keyboard': [[{'text': '25 тыс', 'callback_data': 'summa_invest_user 25 тыс'}, {'text': '50 тыс', 'callback_data': 'summa_invest_user 50 тыс'}, {'text': '100 тыс', 'callback_data': 'summa_invest_user 100 тыс'}], [{'text': '250 тыс', 'callback_data': 'summa_invest_user 250 тыс'}, {'text': '500 тыс', 'callback_data': 'summa_invest_user 500 тыс'}, {'text': '1 млн', 'callback_data': 'summa_invest_user 1 млн'}]]}}
+
+
+user_data
+
+ {'id': 879420273, 'is_bot': False, 'last_name': 'Dubin', 'first_name': 'Anton', 'language_code': 'ru'}
+---------------STATE из NEW_WORKER Ваши интересы... (Состояние: time_invest_user)
